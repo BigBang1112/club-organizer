@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35004.147
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClubOrganizer", "ClubOrganizer\ClubOrganizer.csproj", "{5404D9B5-ECA9-4D54-9D2D-014DD57C71DD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5404D9B5-ECA9-4D54-9D2D-014DD57C71DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5404D9B5-ECA9-4D54-9D2D-014DD57C71DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5404D9B5-ECA9-4D54-9D2D-014DD57C71DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5404D9B5-ECA9-4D54-9D2D-014DD57C71DD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4B6B65BB-5C80-450D-A677-19C177193987}
+	EndGlobalSection
+EndGlobal
