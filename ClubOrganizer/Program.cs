@@ -1,5 +1,9 @@
-﻿using ManiaAPI.NadeoAPI;
+﻿using ClubOrganizer;
+using ManiaAPI.NadeoAPI;
 using Spectre.Console;
+using TmEssentials;
+
+using var cts = new CancellationTokenSource();
 
 using var nls = new NadeoLiveServices();
 
@@ -14,9 +18,34 @@ await nls.AuthorizeAsync(login, password, AuthorizationMethod.UbisoftAccount);
 
 AnsiConsole.MarkupLine("[green]Authorization successful[/]");
 
-var clubs = await nls.GetMyClubsAsync(20);
+var clubs = (await nls.GetMyClubsAsync(10, 0, cts.Token)).ClubList;
 
-foreach (var club in clubs.ClubList)
+var clubDict = clubs.ToDictionary(c => $"{TextFormatter.Deformat(c.Name)} ({c.Id})", c => c);
+
+var clubNameId = AnsiConsole.Prompt(
+    new SelectionPrompt<string>()
+        .PageSize(10)
+        .MoreChoicesText("[grey](Move up and down to reveal more clubs)[/]")
+        .AddChoices(clubDict.Keys));
+
+var club = clubDict[clubNameId];
+
+var activities = await nls.GetAllClubActivitiesAsync(club.Id, cts.Token).ToListAsync(cts.Token);
+
+activities.Sort(new EnvimixClubActivityComparer());
+
+for (int i = activities.Count - 1; i >= 0; i--)
 {
-    AnsiConsole.WriteLine(club.Name);
+    var activity = activities[i];
+
+    AnsiConsole.WriteLine($"{i + 1}. {activity.Name}");
+
+    try
+    {
+        await nls.EditClubActivityAsync(club.Id, activity.Id, new() { Position = i }, cts.Token);
+    }
+    catch (NadeoAPIResponseException ex)
+    {
+        AnsiConsole.WriteException(ex);
+    }
 }
