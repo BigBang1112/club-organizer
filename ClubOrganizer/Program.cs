@@ -40,7 +40,7 @@ for (int i = 0; i < activities.Count; i++)
 {
     var activity = activities[i];
 
-    AnsiConsole.WriteLine($"{i + 1}. {activity.Name}");
+    AnsiConsole.WriteLine($"{i + 1}. {activity.Name} (move to {i})");
 
     try
     {
@@ -48,6 +48,7 @@ for (int i = 0; i < activities.Count; i++)
     }
     catch (NadeoAPIResponseException ex)
     {
+        AnsiConsole.WriteLine(activity.ToString());
         AnsiConsole.WriteException(ex);
         erroredActivities.Add(activity);
     }
