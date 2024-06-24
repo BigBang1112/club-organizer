@@ -34,7 +34,9 @@ var activities = await nls.GetAllClubActivitiesAsync(club.Id, cts.Token).ToListA
 
 activities.Sort(new EnvimixClubActivityComparer());
 
-for (int i = activities.Count - 1; i >= 0; i--)
+var erroredActivities = new List<ClubActivity>();
+
+for (int i = 0; i < activities.Count; i++)
 {
     var activity = activities[i];
 
@@ -47,5 +49,37 @@ for (int i = activities.Count - 1; i >= 0; i--)
     catch (NadeoAPIResponseException ex)
     {
         AnsiConsole.WriteException(ex);
+        erroredActivities.Add(activity);
+    }
+}
+
+if (erroredActivities.Count > 0)
+{
+    AnsiConsole.WriteLine();
+    AnsiConsole.WriteLine("The following activities failed to update:");
+    AnsiConsole.WriteLine();
+
+    for (int i = 0; i < erroredActivities.Count; i++)
+    {
+        var activity = erroredActivities[i];
+
+        AnsiConsole.WriteLine($"{i + 1}. {activity.Name}");
+    }
+}
+
+foreach (var activity in erroredActivities)
+{
+    for (int i = activities.Count - 1; i >= 0; i--)
+    {
+        AnsiConsole.WriteLine($"{i + 1}. {activity.Name}");
+
+        try
+        {
+            await nls.EditClubActivityAsync(club.Id, activity.Id, new() { Position = i }, cts.Token);
+        }
+        catch (NadeoAPIResponseException ex)
+        {
+            AnsiConsole.WriteException(ex);
+        }
     }
 }
