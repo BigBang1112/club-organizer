@@ -81,6 +81,7 @@ foreach (var activity in erroredActivities)
         catch (NadeoAPIResponseException ex)
         {
             AnsiConsole.WriteException(ex);
+            break;
         }
     }
 }
