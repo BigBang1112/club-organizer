@@ -22,12 +22,12 @@ public class EnvimixClubActivityComparer : IComparer<ClubActivity>
 
     private static readonly Dictionary<string, DateOnly> specialCampaignDates = new(StringComparer.OrdinalIgnoreCase)
     {
-        { "S-Discover", new(2023, 11, 23) },
-        { "S-Discovery", new(2023, 11, 23) },
         { "R-Discover", new(2024, 2, 27) },
         { "R-Discovery", new(2024, 2, 27) },
         { "D-Discover", new(2024, 5, 22) },
         { "D-Discovery", new(2024, 5, 22) },
+        { "S-Discover", new(2024, 7, 2) },
+        { "S-Discovery", new(2024, 7, 2) },
         { "Training", new(2020, 6, 1) }
     };
 
